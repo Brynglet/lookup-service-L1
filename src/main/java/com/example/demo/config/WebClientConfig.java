@@ -11,9 +11,9 @@ public class WebClientConfig {
 
     @Bean
     @Endpoint(Endpoint.APISystem.CREDITDATA)
-    public WebClient creditdataEndpoint(@Value("${creditdata.ingress.uri}") String creditdataUri) {
+    public WebClient creditDataEndpoint(@Value("${creditdata.ingress.uri}") String creditDataUri) {
         return WebClient.builder()
-                .baseUrl(creditdataUri)
+                .baseUrl(creditDataUri)
                 .build();
     }
 }

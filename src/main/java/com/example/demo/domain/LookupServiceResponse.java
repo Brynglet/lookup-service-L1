@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LookupServiceResponse {
 
-    private CreditdataResponsePersonalDetails creditdataResponsePersonalDetails;
+    private CreditDataResponsePersonalDetails creditdataResponsePersonalDetails;
 
-    private CreditdataResponseDebt creditdataResponseDebt;
+    private CreditDataResponseDebt creditdataResponseDebt;
 
-    private CreditdataResponseAssertedIncome creditdataResponseAssertedIncome;
-
+    private CreditDataResponseAssertedIncome creditdataResponseAssertedIncome;
 }

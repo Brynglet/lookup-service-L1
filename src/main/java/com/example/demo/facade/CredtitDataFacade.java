@@ -1,8 +1,8 @@
 package com.example.demo.facade;
 
-import com.example.demo.domain.CreditdataResponseAssertedIncome;
-import com.example.demo.domain.CreditdataResponseDebt;
-import com.example.demo.domain.CreditdataResponsePersonalDetails;
+import com.example.demo.domain.CreditDataResponseAssertedIncome;
+import com.example.demo.domain.CreditDataResponseDebt;
+import com.example.demo.domain.CreditDataResponsePersonalDetails;
 import com.example.demo.domain.Endpoint;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,46 +11,43 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 @Slf4j
-public class CredtitdataFacade {
+public class CredtitDataFacade {
 
     private final WebClient webClient;
 
     @Autowired
-    public CredtitdataFacade(@Endpoint(Endpoint.APISystem.CREDITDATA) WebClient webClient) {
+    public CredtitDataFacade(@Endpoint(Endpoint.APISystem.CREDITDATA) WebClient webClient) {
         this.webClient = webClient;
     }
 
-    public CreditdataResponsePersonalDetails getCreditdataPersonalDetails(String ssn) {
+    public CreditDataResponsePersonalDetails getCreditDataPersonalDetails(String ssn) {
 
         return webClient
                 .get()
                 .uri("/api/credit-data/personal-details/{ssn}", ssn)
                 .retrieve()
-                .bodyToMono(CreditdataResponsePersonalDetails.class)
+                .bodyToMono(CreditDataResponsePersonalDetails.class)
                 .block();
-
     }
 
-    public CreditdataResponseDebt getCreditdataDebt(String ssn) {
+    public CreditDataResponseDebt getCreditDataDebt(String ssn) {
 
         return webClient
                 .get()
                 .uri("/api/credit-data/debt/{ssn}", ssn)
                 .retrieve()
-                .bodyToMono(CreditdataResponseDebt.class)
+                .bodyToMono(CreditDataResponseDebt.class)
                 .block();
-
     }
 
-    public CreditdataResponseAssertedIncome getCreditdataAssertedIncome(String ssn) {
+    public CreditDataResponseAssertedIncome getCreditDataAssertedIncome(String ssn) {
 
         return webClient
                 .get()
                 .uri("/api/credit-data/assessed-income/{ssn}", ssn)
                 .retrieve()
-                .bodyToMono(CreditdataResponseAssertedIncome.class)
+                .bodyToMono(CreditDataResponseAssertedIncome.class)
                 .block();
-
     }
 
 }

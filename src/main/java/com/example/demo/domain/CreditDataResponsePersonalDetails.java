@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class CreditdataResponsePersonalDetails {
+public class CreditDataResponsePersonalDetails {
 
     @JsonProperty("address")
     private String address;
@@ -15,5 +15,4 @@ public class CreditdataResponsePersonalDetails {
 
     @JsonProperty("last_name")
     private String lastName;
-
 }

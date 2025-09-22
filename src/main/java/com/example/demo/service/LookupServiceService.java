@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.CreditdataResponseAssertedIncome;
-import com.example.demo.domain.CreditdataResponseDebt;
-import com.example.demo.domain.CreditdataResponsePersonalDetails;
+import com.example.demo.domain.CreditDataResponseAssertedIncome;
+import com.example.demo.domain.CreditDataResponseDebt;
+import com.example.demo.domain.CreditDataResponsePersonalDetails;
 import com.example.demo.exception.ApiError;
-import com.example.demo.facade.CredtitdataFacade;
+import com.example.demo.facade.CredtitDataFacade;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +18,11 @@ import java.util.Map;
 @Service
 public class LookupServiceService {
 
-    private final CredtitdataFacade credtitdataFacade;
+    private final CredtitDataFacade credtitDataFacade;
 
     @Autowired
-    public LookupServiceService(CredtitdataFacade credtitdataFacade) {
-        this.credtitdataFacade = credtitdataFacade;
+    public LookupServiceService(CredtitDataFacade credtitdataFacade) {
+        this.credtitDataFacade = credtitdataFacade;
     }
 
     public Map<String, Object> getLookupServiceResponse(String ssn) {
@@ -31,40 +31,37 @@ public class LookupServiceService {
 
         try {
 
-            CreditdataResponsePersonalDetails personalDetails =
-                    credtitdataFacade.getCreditdataPersonalDetails(ssn);
+            CreditDataResponsePersonalDetails creditDataResponsePersonalDetails =
+                    credtitDataFacade.getCreditDataPersonalDetails(ssn);
 
-            CreditdataResponseDebt debt =
-                    credtitdataFacade.getCreditdataDebt(ssn);
+            CreditDataResponseDebt creditDataResponseDebt =
+                    credtitDataFacade.getCreditDataDebt(ssn);
 
-            CreditdataResponseAssertedIncome income =
-                    credtitdataFacade.getCreditdataAssertedIncome(ssn);
+            CreditDataResponseAssertedIncome creditDataResponseAssertedIncome =
+                    credtitDataFacade.getCreditDataAssertedIncome(ssn);
 
             Map<String, Object> valueMap = new LinkedHashMap<>();
-            valueMap.put("first_name", personalDetails.getFirstName());
-            valueMap.put("last_name", personalDetails.getLastName());
-            valueMap.put("address", personalDetails.getAddress());
-            valueMap.put("assessed_income", income.getAssertedIncome());
-            valueMap.put("balance_of_debt", debt.getBalanceOfDebt());
-            valueMap.put("complaints", debt.getComplaints());
+            valueMap.put("first_name", creditDataResponsePersonalDetails.getFirstName());
+            valueMap.put("last_name", creditDataResponsePersonalDetails.getLastName());
+            valueMap.put("address", creditDataResponsePersonalDetails.getAddress());
+            valueMap.put("assessed_income", creditDataResponseAssertedIncome.getAssertedIncome());
+            valueMap.put("balance_of_debt", creditDataResponseDebt.getBalanceOfDebt());
+            valueMap.put("complaints", creditDataResponseDebt.getComplaints());
 
             // Build the outer map with dynamic key
-            String dynamicKey = "CreditData" + personalDetails.getFirstName();
+            String dynamicKey = "CreditData" + creditDataResponsePersonalDetails.getFirstName();
             Map<String, Object> response = new HashMap<>();
             response.put(dynamicKey, Map.of("value", valueMap));
 
             log.info("getLookupServiceResponse response ok for {}", ssn);
 
             return response;
-
         }  catch (WebClientResponseException e) {
 
             log.error("WebClientResponseException:" + e);
 
             throw new ApiError(e.getStatusCode(), e.getMessage());
-
         }
-
     }
 
 }
