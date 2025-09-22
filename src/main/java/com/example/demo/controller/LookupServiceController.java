@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @Slf4j
 @RestController
 public class LookupServiceController {
@@ -24,7 +26,7 @@ public class LookupServiceController {
     }
 
     @GetMapping("/credit-data/{ssn}")
-    public ResponseEntity<LookupServiceResponse> getCreditdataPersonalDetails(@PathVariable String ssn) {
+    public ResponseEntity<Map<String, Object>> getCreditdataPersonalDetails(@PathVariable String ssn) {
         var ret = lookupServiceService.getLookupServiceResponse(ssn);
         return ResponseEntity.ok(ret);
     }

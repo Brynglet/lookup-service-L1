@@ -8,6 +8,10 @@ import com.example.demo.facade.CredtitdataFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @Service
 public class LookupServiceService {
 
@@ -18,25 +22,32 @@ public class LookupServiceService {
         this.credtitdataFacade = credtitdataFacade;
     }
 
-    public LookupServiceResponse getLookupServiceResponse(String ssn) {
+    public Map<String, Object> getLookupServiceResponse(String ssn) {
 
-        LookupServiceResponse lookupServiceResponse = new LookupServiceResponse();
-
-        CreditdataResponsePersonalDetails CreditdataResponsePersonalDetails =
+        CreditdataResponsePersonalDetails personalDetails =
                 credtitdataFacade.getCreditdataPersonalDetails(ssn);
 
-        CreditdataResponseDebt creditdataResponseDebt =
+        CreditdataResponseDebt debt =
                 credtitdataFacade.getCreditdataDebt(ssn);
 
-        CreditdataResponseAssertedIncome creditdataResponseAssertedIncome =
+        CreditdataResponseAssertedIncome income =
                 credtitdataFacade.getCreditdataAssertedIncome(ssn);
 
-        lookupServiceResponse.setCreditdataResponseDebt(creditdataResponseDebt);
-        lookupServiceResponse.setCreditdataResponseAssertedIncome(creditdataResponseAssertedIncome);
-        lookupServiceResponse.setCreditdataResponsePersonalDetails(CreditdataResponsePersonalDetails);
+        // Merge into a flat map for "value"
+        Map<String, Object> valueMap = new LinkedHashMap<>();
+        valueMap.put("first_name", personalDetails.getFirstName());
+        valueMap.put("last_name", personalDetails.getLastName());
+        valueMap.put("address", personalDetails.getAddress());
+        valueMap.put("assessed_income", income.getAssertedIncome());
+        valueMap.put("balance_of_debt", debt.getBalanceOfDebt());
+        valueMap.put("complaints", debt.getComplaints());
 
-        return lookupServiceResponse;
+        // Build the outer map with dynamic key
+        String dynamicKey = "CreditData" + personalDetails.getFirstName();
+        Map<String, Object> response = new HashMap<>();
+        response.put(dynamicKey, Map.of("value", valueMap));
 
+        return response;
     }
 
 }
