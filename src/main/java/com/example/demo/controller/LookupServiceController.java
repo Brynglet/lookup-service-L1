@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.ZonedDateTime;
@@ -24,14 +25,15 @@ public class LookupServiceController {
     }
 
     @GetMapping("/ping")
-    public ResponseEntity<String> health(String ssn) {
+    public ResponseEntity<String> health() {
         return ResponseEntity.ok("The service is up and running.");
     }
 
     @GetMapping("/credit-data/{ssn}")
-    public ResponseEntity<CreditdataResponsePersonalDetails> getCreditdataPersonalDetails(String ssn) {
+    public ResponseEntity<CreditdataResponsePersonalDetails> getCreditdataPersonalDetails(@PathVariable String ssn) {
         var ret = lookupServiceService.getCreditdataPersonalDetails(ssn);
         return ResponseEntity.ok(ret);
     }
+
 
 }

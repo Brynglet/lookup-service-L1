@@ -23,7 +23,6 @@ public class CredtitdataFacade {
     }
 
     public CreditdataResponsePersonalDetails getCreditdataPersonalDetails(String ssn) {
-
         try {
             return webClient
                     .get()
