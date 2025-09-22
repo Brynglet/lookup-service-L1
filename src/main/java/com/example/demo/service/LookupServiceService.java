@@ -4,7 +4,7 @@ import com.example.demo.domain.CreditDataResponseAssertedIncome;
 import com.example.demo.domain.CreditDataResponseDebt;
 import com.example.demo.domain.CreditDataResponsePersonalDetails;
 import com.example.demo.exception.ApiError;
-import com.example.demo.facade.CredtitDataFacade;
+import com.example.demo.facade.CreditDataFacade;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +18,11 @@ import java.util.Map;
 @Service
 public class LookupServiceService {
 
-    private final CredtitDataFacade credtitDataFacade;
+    private final CreditDataFacade creditDataFacade;
 
     @Autowired
-    public LookupServiceService(CredtitDataFacade credtitdataFacade) {
-        this.credtitDataFacade = credtitdataFacade;
+    public LookupServiceService(CreditDataFacade creditdataFacade) {
+        this.creditDataFacade = creditdataFacade;
     }
 
     public Map<String, Object> getLookupServiceResponse(String ssn) {
@@ -32,13 +32,13 @@ public class LookupServiceService {
         try {
 
             CreditDataResponsePersonalDetails creditDataResponsePersonalDetails =
-                    credtitDataFacade.getCreditDataPersonalDetails(ssn);
+                    creditDataFacade.getCreditDataPersonalDetails(ssn);
 
             CreditDataResponseDebt creditDataResponseDebt =
-                    credtitDataFacade.getCreditDataDebt(ssn);
+                    creditDataFacade.getCreditDataDebt(ssn);
 
             CreditDataResponseAssertedIncome creditDataResponseAssertedIncome =
-                    credtitDataFacade.getCreditDataAssertedIncome(ssn);
+                    creditDataFacade.getCreditDataAssertedIncome(ssn);
 
             Map<String, Object> valueMap = new LinkedHashMap<>();
             valueMap.put("first_name", creditDataResponsePersonalDetails.getFirstName());

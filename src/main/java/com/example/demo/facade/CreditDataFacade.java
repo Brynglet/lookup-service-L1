@@ -11,12 +11,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 @Slf4j
-public class CredtitDataFacade {
+public class CreditDataFacade {
 
     private final WebClient webClient;
 
     @Autowired
-    public CredtitDataFacade(@Endpoint(Endpoint.APISystem.CREDITDATA) WebClient webClient) {
+    public CreditDataFacade(@Endpoint(Endpoint.APISystem.CREDITDATA) WebClient webClient) {
         this.webClient = webClient;
     }
 
