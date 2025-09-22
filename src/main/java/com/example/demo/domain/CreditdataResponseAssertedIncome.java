@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class CreditdataResponseAssertedIncome {
+
     @JsonProperty("assessed_income")
     private Integer assertedIncome;
+
 }

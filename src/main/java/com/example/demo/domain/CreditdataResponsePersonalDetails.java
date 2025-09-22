@@ -15,4 +15,5 @@ public class CreditdataResponsePersonalDetails {
 
     @JsonProperty("last_name")
     private String lastName;
+
 }
